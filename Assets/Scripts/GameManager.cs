@@ -6,8 +6,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [SerializeField] private TextMeshProUGUI currentScore;
+    [SerializeField] private int targetScore;
 
-    private int score;
+    private int _currScore;
 
     private void Awake()
     {
@@ -19,9 +20,23 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
+    private void Start() => UpdateHUD();
+
+    private void UpdateHUD()
+    {
+        currentScore.text = $"Score: {_currScore} / {targetScore}";
+    }
+
     public void AddScore(int amount = 1)
     {
-        score += amount;
-        currentScore.text = $"Score: {score}";
+        _currScore += amount;
+        UpdateHUD();
+
+        if (_currScore >= targetScore) ShowWinUI();
+    }
+
+    private void ShowWinUI()
+    {
+        Time.timeScale = 0f;
     }
 }

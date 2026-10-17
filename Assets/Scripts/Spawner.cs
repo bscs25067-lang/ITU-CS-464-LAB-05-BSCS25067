@@ -16,7 +16,7 @@ public class Spawner : MonoBehaviour
 
     private void Update()
     {
-        if (maxCoins >= transform.childCount) return;
+        if (transform.childCount >= maxCoins) return;
 
         _duration += Time.deltaTime;
 
@@ -29,11 +29,16 @@ public class Spawner : MonoBehaviour
 
     private void Spawn()
     {
-        float x = Random.Range(-area, area + 1);
-        float z = Random.Range(-area, area + 1);
+        Vector3 spawnPos = Vector3.zero;
+        while (true)
+        {
+            float x = Random.Range(-area, area + 1);
+            float z = Random.Range(-area, area + 1);
+            spawnPos = new Vector3(x, 0.5f, z);
 
-        Vector3 spawnPos = new Vector3(x, 0.5f, z);
-        if (Vector3.Distance(spawnPos, player.position) < playerRadius) Spawn();
+            if (Vector3.Distance(spawnPos, player.position) >= playerRadius)
+                break;
+        }
 
         Instantiate(coinPrefab, spawnPos, Quaternion.identity, transform);
     }

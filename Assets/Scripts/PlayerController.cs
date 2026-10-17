@@ -15,8 +15,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        _input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        _input = Vector2.ClampMagnitude(_input, 1);
+        _input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        _input = Vector2.ClampMagnitude(_input, 1f);
     }
 
     private void FixedUpdate()

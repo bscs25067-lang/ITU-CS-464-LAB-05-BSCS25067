@@ -8,11 +8,15 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Transform player;
     [SerializeField] private TextMeshProUGUI currentScore;
+    [SerializeField] private TextMeshProUGUI bonusScore;
+    [SerializeField] private GameObject bonusScorePopup;
     [SerializeField] private GameObject winUI;
     [SerializeField] private ParticleSystem collectFX;
     [SerializeField] private int targetScore;
 
     private int _currScore;
+    private int _bonusCoins;
+    private Spawner _spawner;
 
     private void Awake()
     {
@@ -22,6 +26,7 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
+        _spawner = GetComponentInChildren<Spawner>();
     }
 
     private void Start()
@@ -35,6 +40,10 @@ public class GameManager : MonoBehaviour
     private void UpdateHUD()
     {
         currentScore.text = $"Score: {_currScore} / {targetScore}";
+    }
+    private void ShowPopup()
+    {
+        bonusScore.text = $"Bonus Coins Collected: {_bonusCoins} / 50";
     }
 
 
@@ -51,6 +60,16 @@ public class GameManager : MonoBehaviour
 
         if (_currScore >= targetScore) ShowWinUI();
     }
+
+    public void AddBonusScore(int amount = 1)
+    {
+        _bonusCoins += amount;
+        collectFX.Play();
+        bonusScorePopup.SetActive(true);
+        ShowPopup();
+    }
+
+    public void SpawnBlueCoins() => _spawner.SpawnBlueCoins(50);
 
     private void ShowWinUI()
     {

@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 28415321}
   - component: {fileID: 28415323}
   - component: {fileID: 28415322}
+  - component: {fileID: 28415324}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -196,6 +197,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 28415320}
   m_CullTransparentMesh: 1
+--- !u!225 &28415324
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28415320}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &177081496
 GameObject:
   m_ObjectHideFlags: 0
@@ -1873,9 +1886,12 @@ MonoBehaviour:
   currentScore: {fileID: 1494100940}
   bonusScore: {fileID: 1399344549}
   bonusScorePopup: {fileID: 1385957333}
-  winUI: {fileID: 1854159894}
+  winUI: {fileID: 28415320}
   collectFX: {fileID: 720865548}
   targetScore: 50
+  winPopDuration: 0.4
+  winFadeDuration: 0.25
+  winOvershoot: 3
   popInDuration: 0.15
   popupHoldTime: 1.5
   fadeOutDuration: 0.5
@@ -2416,7 +2432,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1854159895
 MonoBehaviour:
   m_ObjectHideFlags: 0

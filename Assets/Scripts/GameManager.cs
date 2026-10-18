@@ -15,6 +15,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ParticleSystem collectFX;
     [SerializeField] private int targetScore;
 
+    [Header("Win UI")]
+    [SerializeField] private float winPopDuration = 0.5f;
+    [SerializeField] private float winFadeDuration = 0.08f;
+    [SerializeField] private float winOvershoot = 3f;
+
+    private CanvasGroup _winGroup;
+    private bool _hasWon;
+
     [Header("Bonus Popup")]
     [SerializeField] private float popInDuration = 0.15f;
     [SerializeField] private float popupHoldTime = 1.5f;
@@ -41,6 +49,10 @@ public class GameManager : MonoBehaviour
         _popupGroup = bonusScorePopup.GetComponent<CanvasGroup>();
         if (_popupGroup == null)
             _popupGroup = bonusScorePopup.AddComponent<CanvasGroup>();
+
+        _winGroup = winUI.GetComponent<CanvasGroup>();
+        if (_winGroup == null)
+            _winGroup = winUI.AddComponent<CanvasGroup>();
     }
 
     private void Start()
@@ -132,8 +144,40 @@ public class GameManager : MonoBehaviour
 
     private void ShowWinUI()
     {
+        if (_hasWon) return;
+        _hasWon = true;
+
         Time.timeScale = 0f;
+        StartCoroutine(WinPopRoutine());
+    }
+
+    private IEnumerator WinPopRoutine()
+    {
+        Transform t = winUI.transform;
         winUI.SetActive(true);
+        _winGroup.alpha = 0f;
+        t.localScale = Vector3.zero;
+
+        float elapsed = 0f;
+        while (elapsed < winPopDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float p = Mathf.Clamp01(elapsed / winPopDuration);
+
+            _winGroup.alpha = Mathf.Clamp01(elapsed / winFadeDuration);
+            t.localScale = Vector3.one * EaseOutBack(p, winOvershoot);
+            yield return null;
+        }
+
+        _winGroup.alpha = 1f;
+        t.localScale = Vector3.one;
+    }
+
+    private static float EaseOutBack(float x, float overshoot = 1.70158f)
+    {
+        float c3 = overshoot + 1f;
+        float t = x - 1f;
+        return 1f + c3 * t * t * t + overshoot * t * t;
     }
 
     public void RestartGame()

@@ -6,8 +6,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    [SerializeField] private Transform player;
     [SerializeField] private TextMeshProUGUI currentScore;
     [SerializeField] private GameObject winUI;
+    [SerializeField] private ParticleSystem collectFX;
     [SerializeField] private int targetScore;
 
     private int _currScore;
@@ -28,14 +30,23 @@ public class GameManager : MonoBehaviour
         winUI.SetActive(false);
     }
 
+    private void Update() => FollowPlayer();
+
     private void UpdateHUD()
     {
         currentScore.text = $"Score: {_currScore} / {targetScore}";
     }
 
+
+    private void FollowPlayer()
+    {
+        collectFX.transform.position = player.position;
+    }
+
     public void AddScore(int amount = 1)
     {
         _currScore += amount;
+        collectFX.Play();
         UpdateHUD();
 
         if (_currScore >= targetScore) ShowWinUI();

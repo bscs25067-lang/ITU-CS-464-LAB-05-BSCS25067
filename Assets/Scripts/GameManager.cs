@@ -1,11 +1,13 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
     [SerializeField] private TextMeshProUGUI currentScore;
+    [SerializeField] private GameObject winUI;
     [SerializeField] private int targetScore;
 
     private int _currScore;
@@ -20,7 +22,11 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
-    private void Start() => UpdateHUD();
+    private void Start()
+    {
+        UpdateHUD();
+        winUI.SetActive(false);
+    }
 
     private void UpdateHUD()
     {
@@ -38,5 +44,12 @@ public class GameManager : MonoBehaviour
     private void ShowWinUI()
     {
         Time.timeScale = 0f;
+        winUI.SetActive(true);
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

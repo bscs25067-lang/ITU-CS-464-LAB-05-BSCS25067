@@ -719,7 +719,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
 --- !u!114 &551554554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1472,6 +1472,7 @@ GameObject:
   - component: {fileID: 1385957334}
   - component: {fileID: 1385957336}
   - component: {fileID: 1385957335}
+  - component: {fileID: 1385957337}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1513,9 +1514,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.7490196}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1537,6 +1538,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1385957333}
   m_CullTransparentMesh: 1
+--- !u!225 &1385957337
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385957333}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &1399344547
 GameObject:
   m_ObjectHideFlags: 0
@@ -1858,11 +1871,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   player: {fileID: 1608192168}
   currentScore: {fileID: 1494100940}
-  bonusScore: {fileID: 1494100940}
+  bonusScore: {fileID: 1399344549}
   bonusScorePopup: {fileID: 1385957333}
   winUI: {fileID: 1854159894}
   collectFX: {fileID: 720865548}
   targetScore: 50
+  popInDuration: 0.15
+  popupHoldTime: 1.5
+  fadeOutDuration: 0.5
+  popScale: 1.2
 --- !u!1 &1608192164
 GameObject:
   m_ObjectHideFlags: 0
